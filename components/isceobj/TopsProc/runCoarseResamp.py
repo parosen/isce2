@@ -75,7 +75,7 @@ def resampSecondary(mas, slv, rdict, outname ):
 
 def runCoarseResamp(self):
     '''
-    Create coregistered overlap secondarys.
+    Create coregistered overlap secondaries.
     '''
 
     if not self.doESD:

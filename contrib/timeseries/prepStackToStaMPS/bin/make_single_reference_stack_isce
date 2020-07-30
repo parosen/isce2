@@ -211,7 +211,7 @@ if (-e $SM_DIR/slcs.list) then
 endif
 if (! -e $SM_DIR/slcs.list) then
    \ls -d [0-9]*[0-9] | sed "/$reference_date/ d" | gawk 'BEGIN {FS="/"} {print $(NF)}' > $SM_DIR/slcs.list
-   echo "Processing all SLCs as secondarys except $reference_date"
+   echo "Processing all SLCs as secondaries except $reference_date"
 endif
 cd $SM_DIR
 

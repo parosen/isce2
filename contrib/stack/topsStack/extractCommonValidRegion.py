@@ -85,7 +85,7 @@ def main(iargs=None):
 
     referenceSwathList = ut.getSwathList(inps.reference)
     secondaryList = glob.glob(os.path.join(inps.secondary,'2*'))
-    secondarySwathList = ut.getSwathList(secondaryList[0]) # assuming all secondarys have the same swaths
+    secondarySwathList = ut.getSwathList(secondaryList[0]) # assuming all secondaries have the same swaths
     swathList = list(sorted(set(referenceSwathList+secondarySwathList)))
 
     for swath in swathList:

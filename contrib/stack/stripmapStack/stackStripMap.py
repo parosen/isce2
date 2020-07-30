@@ -161,14 +161,14 @@ def slcStack(inps, acquisitionDates, stackReferenceDate, secondaryDates, pairs, 
     runObj = run()
     runObj.configure(inps, 'run_' + str(i) + "_focus_split")
     config_prefix = "config_focus_split"
-    runObj.secondarys_focus_split(secondaryDates, config_prefix, split=splitFlag, focus=not inps.nofocus, native=not inps.zerodop)
+    runObj.secondaries_focus_split(secondaryDates, config_prefix, split=splitFlag, focus=not inps.nofocus, native=not inps.zerodop)
     runObj.finalize()
 
     i+=1
     runObj = run()
     runObj.configure(inps, 'run_' + str(i) + "_geo2rdr_coarseResamp")
     config_prefix = "config_geo2rdr_coarseResamp_"
-    runObj.secondarys_geo2rdr_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, native=(not inps.nofocus) or (not inps.zerodop))
+    runObj.secondaries_geo2rdr_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, native=(not inps.nofocus) or (not inps.zerodop))
     runObj.finalize()
 
     i+=1
@@ -188,7 +188,7 @@ def slcStack(inps, acquisitionDates, stackReferenceDate, secondaryDates, pairs, 
     runObj = run()
     runObj.configure(inps, 'run_' + str(i) + "_fineResamp")
     config_prefix = 'config_fineResamp_'
-    runObj.secondarys_fine_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, split=splitFlag)
+    runObj.secondaries_fine_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, split=splitFlag)
     runObj.finalize()
     
     if rubberSheet:
@@ -222,7 +222,7 @@ def slcStack(inps, acquisitionDates, stackReferenceDate, secondaryDates, pairs, 
        runObj = run()
        runObj.configure(inps, 'run_' + str(i) + "_fineResamp")
        config_prefix = 'config_fineResamp_'
-       runObj.secondarys_fine_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, split=splitFlag)
+       runObj.secondaries_fine_resampleSlc(stackReferenceDate, secondaryDates, config_prefix, split=splitFlag)
        runObj.finalize()
 
     # adding the baseline grid generation

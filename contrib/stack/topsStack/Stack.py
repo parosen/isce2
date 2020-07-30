@@ -321,11 +321,11 @@ class run(object):
         del configObj
         self.runf.write(self.text_cmd + 'SentinelWrapper.py -c ' + configName + '\n')
 
-    def unpackSecondarysSLC(self,  stackReferenceDate, secondaryList, safe_dict):
+    def unpackSecondariesSLC(self,  stackReferenceDate, secondaryList, safe_dict):
 
         for secondary in secondaryList:
             configName = os.path.join(self.config_path,'config_secondary_'+secondary)
-            outdir = os.path.join(self.work_dir,'secondarys/'+secondary)
+            outdir = os.path.join(self.work_dir,'secondaries/'+secondary)
             configObj = config(configName)
             configObj.configure(self)
             configObj.dirName = safe_dict[secondary].safe_file
@@ -345,7 +345,7 @@ class run(object):
             configObj = config(configName)
             configObj.configure(self)
             configObj.reference = os.path.join(self.work_dir,'reference/')
-            configObj.secondary = os.path.join(self.work_dir,'secondarys/'+secondary)
+            configObj.secondary = os.path.join(self.work_dir,'secondaries/'+secondary)
             configObj.baselineFile = os.path.join(self.work_dir,'baselines/' + stackReferenceDate +'_' + secondary + '/' + stackReferenceDate +'_'+ secondary  + '.txt')
             configObj.computeAverageBaseline('[Function-1]')
             configObj.finalize()
@@ -358,7 +358,7 @@ class run(object):
             configObj = config(configName)
             configObj.configure(self)
             configObj.reference = os.path.join(self.work_dir,'reference/')
-            configObj.secondary = os.path.join(self.work_dir,'secondarys/'+secondary)
+            configObj.secondary = os.path.join(self.work_dir,'secondaries/'+secondary)
             configObj.baselineFile = os.path.join(self.work_dir, 'merged/baselines/' + secondary + '/' + secondary )
             configObj.computeGridBaseline('[Function-1]')                                                                                                            
             configObj.finalize()
@@ -393,10 +393,10 @@ class run(object):
             ###########
             configObj = config(configName)
             configObj.configure(self)
-            configObj.secondaryDir = os.path.join(self.work_dir, 'secondarys/'+secondary)
+            configObj.secondaryDir = os.path.join(self.work_dir, 'secondaries/'+secondary)
             configObj.referenceDir = os.path.join(self.work_dir, 'reference')
             configObj.geom_reference = os.path.join(self.work_dir, 'geom_reference')
-            configObj.coregSecondaryDir = os.path.join(self.work_dir, 'coreg_secondarys/'+secondary)
+            configObj.coregSecondaryDir = os.path.join(self.work_dir, 'coregistered_slc_stack/'+secondary)
             if fullBurst == 'True':
                 configObj.misreg_az = os.path.join(self.work_dir, 'misreg/azimuth/dates/' + secondary + '.txt')
                 configObj.misreg_rng = os.path.join(self.work_dir, 'misreg/range/dates/' + secondary + '.txt')
@@ -418,9 +418,9 @@ class run(object):
             ###########
             configObj = config(configName)
             configObj.configure(self)
-            configObj.secondaryDir = os.path.join(self.work_dir, 'secondarys/' + secondary)
+            configObj.secondaryDir = os.path.join(self.work_dir, 'secondaries/' + secondary)
             configObj.referenceDir = os.path.join(self.work_dir, 'reference')
-            configObj.coregSecondaryDir = os.path.join(self.work_dir, 'coreg_secondarys/' + secondary)
+            configObj.coregSecondaryDir = os.path.join(self.work_dir, 'coregistered_slc_stack/' + secondary)
             configObj.interferogram_prefix = 'coarse'
             configObj.referenceDir = os.path.join(self.work_dir, 'reference')
             if fullBurst == 'True':
@@ -444,8 +444,8 @@ class run(object):
                     pairs.append((dateList[i],dateList[j]))
 
         for date in dateList:
-            safe_dict[date].slc = os.path.join(self.work_dir , 'coreg_secondarys/'+date)
-            safe_dict[date].slc_overlap = os.path.join(self.work_dir , 'coreg_secondarys/'+date)
+            safe_dict[date].slc = os.path.join(self.work_dir , 'coregistered_slc_stack/'+date)
+            safe_dict[date].slc_overlap = os.path.join(self.work_dir , 'coregistered_slc_stack/'+date)
         safe_dict[self.reference_date].slc = os.path.join(self.work_dir , 'reference')
         safe_dict[self.reference_date].slc_overlap = os.path.join(self.work_dir , 'reference')
         for pair in pairs:
@@ -489,13 +489,13 @@ class run(object):
 
     def extractStackValidRegion(self):
         referenceDir = os.path.join(self.work_dir, 'reference')
-        coregSecondaryDir = os.path.join(self.work_dir, 'coreg_secondarys')
+        coregSecondaryDir = os.path.join(self.work_dir, 'coregistered_slc_stack')
         self.runf.write(self.text_cmd + 'extractCommonValidRegion.py -m ' + referenceDir + ' -s ' + coregSecondaryDir + '\n')
 
     def generate_burstIgram(self, dateList, safe_dict, pairs):
 
         for date in dateList:
-            safe_dict[date].slc = os.path.join(self.work_dir, 'coreg_secondarys/'+date)
+            safe_dict[date].slc = os.path.join(self.work_dir, 'coregistered_slc_stack/'+date)
         safe_dict[self.reference_date].slc = os.path.join(self.work_dir , 'reference')
         for pair in pairs:
             reference = pair[0]
@@ -518,7 +518,7 @@ class run(object):
 
     def igram_mergeBurst(self, dateList, safe_dict, pairs):
         for date in dateList:
-            safe_dict[date].slc = os.path.join(self.work_dir, 'coreg_secondarys/'+date)
+            safe_dict[date].slc = os.path.join(self.work_dir, 'coregistered_slc_stack/'+date)
         safe_dict[self.reference_date].slc = os.path.join(self.work_dir , 'reference')
         for pair in pairs:
             reference = pair[0]
@@ -552,7 +552,7 @@ class run(object):
             configObj = config(configName)
             configObj.configure(self)
             configObj.stack = os.path.join(self.work_dir, 'stack')
-            configObj.reference = os.path.join(self.work_dir, 'coreg_secondarys/' + secondary)
+            configObj.reference = os.path.join(self.work_dir, 'coregistered_slc_stack/' + secondary)
             configObj.dirName = configObj.reference
             configObj.namePattern = 'burst*slc'
             configObj.mergedFile = os.path.join(self.work_dir, 'merged/SLC/' + secondary + '/' + secondary + '.slc')

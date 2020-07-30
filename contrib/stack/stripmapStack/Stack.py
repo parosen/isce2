@@ -355,7 +355,7 @@ class run(object):
         self.runf.write(self.text_cmd+'stripmapWrapper.py -c '+ configName+'\n')
 
 
-    def secondarys_focus_split(self, secondaryDates, config_prefix, split=False, focus=True, native=True):
+    def secondaries_focus_split(self, secondaryDates, config_prefix, split=False, focus=True, native=True):
         for secondary in secondaryDates:
             configName = os.path.join(self.configDir, config_prefix + '_'+secondary)
             configObj = config(configName)
@@ -374,7 +374,7 @@ class run(object):
             del configObj
             self.runf.write(self.text_cmd+'stripmapWrapper.py -c '+ configName+'\n')
 
-    def secondarys_geo2rdr_resampleSlc(self, stackReference, secondaryDates, config_prefix, native=True):
+    def secondaries_geo2rdr_resampleSlc(self, stackReference, secondaryDates, config_prefix, native=True):
 
         for secondary in secondaryDates:
             configName = os.path.join(self.configDir,config_prefix+secondary) 
@@ -550,7 +550,7 @@ class run(object):
         configObj.finalize()
         self.runf.write(self.text_cmd+'stripmapWrapper.py -c '+ configName+'\n')
 
-    def secondarys_fine_resampleSlc(self, stackReference, secondaryDates, config_prefix, split=False):
+    def secondaries_fine_resampleSlc(self, stackReference, secondaryDates, config_prefix, split=False):
         # copy over the reference into the final SLC folder as well
         self.runf.write(self.text_cmd + ' referenceStackCopy.py -i ' + 
                         os.path.join(self.slcDir, 
@@ -562,7 +562,7 @@ class run(object):
                                      stackReference,
                                      stackReference+'.slc' )+ '\n')
 
-        # now resample each of the secondarys to the reference geometry
+        # now resample each of the secondaries to the reference geometry
         for secondary in secondaryDates:
             configName = os.path.join(self.configDir, config_prefix+secondary)
             configObj = config(configName)

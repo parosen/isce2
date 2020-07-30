@@ -81,14 +81,14 @@ def date_list(h5file):
   dateList = []
   tbase = []
   references = [None]*numPiars
-  secondarys = [None]*numPiars
+  secondaries = [None]*numPiars
   for i in range(numPiars):
       reference = pairs[i,0].decode("utf-8")
       secondary = pairs[i,1].decode("utf-8")
       if reference not in dateList: dateList.append(reference)
       if secondary not in dateList: dateList.append(secondary)
       references[i]=reference
-      secondarys[i]=secondary
+      secondaries[i]=secondary
 
   dateList.sort()
   d1 = datetime.datetime(*time.strptime(dateList[0],"%Y-%m-%d %H:%M:%S")[0:6])
@@ -100,12 +100,12 @@ def date_list(h5file):
   dateDict = {}
   for i in range(len(dateList)): dateDict[dateList[i]] = tbase[i]
 
-  return tbase,dateList,dateDict, references, secondarys
+  return tbase,dateList,dateDict, references, secondaries
 
 #####################################
 
 def design_matrix(h5File):
-  tbase,dateList,dateDict, references, secondarys = date_list(h5File)
+  tbase,dateList,dateDict, references, secondaries = date_list(h5File)
   numDates = len(dateDict)
   numPairs = len(references)
   A = np.zeros((numPairs,numDates))
@@ -113,7 +113,7 @@ def design_matrix(h5File):
   tbase = np.array(tbase)
   for ni in range(numPairs):
      ndxt1 = dateList.index(references[ni])
-     ndxt2 = dateList.index(secondarys[ni])
+     ndxt2 = dateList.index(secondaries[ni])
      A[ni,ndxt1] = -1
      A[ni,ndxt2] = 1
      B[ni,ndxt1:ndxt2] = tbase[ndxt1+1:ndxt2+1]-tbase[ndxt1:ndxt2]
@@ -126,7 +126,7 @@ def design_matrix(h5File):
   return A, B  
 
 def invert_wlq(inps,h5File):
-    tbase,dateList,dateDict, references, secondarys = date_list(h5File)
+    tbase,dateList,dateDict, references, secondaries = date_list(h5File)
     numPairs = len(references)
     A,B = design_matrix(h5File)
    
@@ -218,7 +218,7 @@ def invert_wlq(inps,h5File):
     '''
 def invert(inps,h5File):
 
-    tbase,dateList,dateDict, references, secondarys = date_list(h5File)
+    tbase,dateList,dateDict, references, secondaries = date_list(h5File)
     numPairs = len(references)
     A,B = design_matrix(h5File)
 

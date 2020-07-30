@@ -100,7 +100,7 @@ def resampSecondary(mas, slv, rdict, outname, flatten):
 
 def main(iargs=None):
     '''
-    Create coregistered overlap secondarys.
+    Create coregistered overlap secondaries.
     '''
     inps = cmdLineParse(iargs)
     referenceSwathList = ut.getSwathList(inps.reference)

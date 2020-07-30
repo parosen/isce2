@@ -450,7 +450,7 @@ def slcStack(inps, acquisitionDates, stackReferenceDate, secondaryDates, safe_di
     i+=1
     runObj = run()
     runObj.configure(inps, 'run_{:02d}_unpack_secondary_slc'.format(i))
-    runObj.unpackSecondarysSLC(stackReferenceDate, secondaryDates, safe_dict)
+    runObj.unpackSecondariesSLC(stackReferenceDate, secondaryDates, safe_dict)
     runObj.finalize()
 
     i+=1
@@ -611,11 +611,11 @@ def offsetStack(inps, acquisitionDates, stackReferenceDate, secondaryDates, safe
 
 def checkCurrentStatus(inps):
     acquisitionDates, stackReferenceDate, secondaryDates, safe_dict = get_dates(inps)
-    coregSLCDir = os.path.join(inps.work_dir, 'coreg_secondarys')
+    coregSLCDir = os.path.join(inps.work_dir, 'coregistered_slc_stack')
     stackUpdate = False
     if os.path.exists(coregSLCDir):
-        coregSecondarys = glob.glob(os.path.join(coregSLCDir, '[0-9]???[0-9]?[0-9]?'))
-        coregSLC = [os.path.basename(slv) for slv in coregSecondarys]
+        coregSecondaries = glob.glob(os.path.join(coregSLCDir, '[0-9]???[0-9]?[0-9]?'))
+        coregSLC = [os.path.basename(slv) for slv in coregSecondaries]
         coregSLC.sort()
         if len(coregSLC)>0:
             print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')

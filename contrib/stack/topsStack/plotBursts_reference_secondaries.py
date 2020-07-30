@@ -15,7 +15,7 @@ def createParser():
     '''
     
     parser = argparse.ArgumentParser(description='Generate all kml files for the reference and secondary slc')
-    parser.add_argument('-i', '--i', dest='inputdir', type=str, default="secondarys", help='Input directory')
+    parser.add_argument('-i', '--i', dest='inputdir', type=str, default="secondaries", help='Input directory')
     parser.add_argument('-o', '--o', dest='outputdir', type=str, default="kml_slcs", help='Output directory')
     return parser
 

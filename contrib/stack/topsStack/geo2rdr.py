@@ -17,7 +17,7 @@ def createParser():
             help='Directory with the secondary image')
     parser.add_argument('-g', '--geom_referenceDir', type=str, dest='geom_referenceDir', default='geom_reference',
             help='Directory for geometry files of the reference')
-    parser.add_argument('-c', '--coregSLCdir', type=str, dest='coregdir', default='coreg_secondarys',
+    parser.add_argument('-c', '--coregSLCdir', type=str, dest='coregdir', default='coregistered_slc_stack',
             help='Directory with coregistered SLC data')
     parser.add_argument('-a', '--azimuth_misreg', type=str, dest='misreg_az', default='',
             help='A text file that contains zimuth misregistration in subpixels')

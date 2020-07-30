@@ -189,7 +189,7 @@ def getValidLines(secondary, rdict, inname, misreg_az=0.0, misreg_rng=0.0):
 
 def runFineResamp(self):
     '''
-    Create coregistered overlap secondarys.
+    Create coregistered overlap secondaries.
     '''
 
 
